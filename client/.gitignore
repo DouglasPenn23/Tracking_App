@@ -1,0 +1,41 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Additional rules for React app created using create-react-app
+
+# Dependencies
+/my-react-app/node_modules
+
+# Compiled output
+/my-react-app/build
+/my-react-app/dist
+
+# Environment variables
+/my-react-app/.env.local
+/my-react-app/.env.development.local
+/my-react-app/.env.test.local
+/my-react-app/.env.production.local
+
+# Automatically generated build files
+.DS_Store
