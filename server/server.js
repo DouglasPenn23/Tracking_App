@@ -1,40 +1,34 @@
-// server/server.js
+// server.js (backend)
+
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 
-// Sample data structure for tracking entries
-const trackingData = [
-  {
-    id: 1,
-    item: 'Beer',
-    quantity: 24,
-    date: '2023-07-27',
-    unit: 'cans',
-  },
-  // Add more tracking entries...
-];
+// MongoDB connection and other setup code...
 
-// Start the server
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+// Define a Mongoose schema for beer data
+const beerSchema = new mongoose.Schema({
+  beerAmount: Number,
+  timePeriod: String,
 });
 
-// server/server.js
-// ...
+const Beer = mongoose.model('Beer', beerSchema);
 
-// API route to add a new tracking entry
-app.post('/api/tracking', (req, res) => {
-    // Get the data for the new tracking entry from the request body
-    const newEntry = req.body;
-  
-    // Assign a unique ID to the new entry (You can use a library like 'uuid' for this)
-    newEntry.id = generateUniqueId();
-  
-    // Push the new entry to the trackingData array
-    trackingData.push(newEntry);
-  
-    // Send a response indicating success
-    res.json({ success: true, message: 'Tracking entry added successfully!' });
-  });
-  
+// POST endpoint for saving beer data to the database
+app.post('/api/beer', async (req, res) => {
+  try {
+    const { beerAmount, timePeriod } = req.body;
+    // Save the data to the MongoDB collection
+    await Beer.create({ beerAmount, timePeriod });
+    res.status(201).json({ message: 'Data saved successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error saving data' });
+  }
+});
+
+// Other routes and server setup...
+
+// Start the server
+app.listen(5000, () => {
+  console.log('Server is running on port 5000');
+});
